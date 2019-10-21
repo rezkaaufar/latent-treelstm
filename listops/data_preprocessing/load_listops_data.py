@@ -6,7 +6,6 @@
 T_SHIFT = 0
 T_REDUCE = 1
 
-
 def load_listops_data(data_path, vocab_path=None, max_len=float("inf")):
     if vocab_path:
         with open(vocab_path) as f:
