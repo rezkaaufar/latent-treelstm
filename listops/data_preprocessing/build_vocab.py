@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import os
-from load_listops_data import load_listops_data
+from listops.data_preprocessing.load_listops_data import load_listops_data
 
 data = load_listops_data("data/listops/interim/train.tsv")
 vocab = set()

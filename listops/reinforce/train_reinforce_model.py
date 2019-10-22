@@ -19,9 +19,8 @@ from listops.models import ReinforceModel
 from listops.data_preprocessing import ListOpsDataset
 from listops.data_preprocessing import ListOpsBucketSampler
 
-
 def make_path_preparations(args):
-    seed = hash(str(args)) % 1000_000
+    seed = hash(str(args)) % 1000000
     ListOpsBucketSampler.random_seed = seed
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
