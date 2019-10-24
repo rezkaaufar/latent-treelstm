@@ -200,7 +200,8 @@ def train(train_data, valid_data, model, optimizer, lr_scheduler, es, epoch, arg
     entropy_meter = AverageMeter()
     n_entropy_meter = AverageMeter()
 
-    device = 'cuda:'+str(gpu-id) if torch.cuda.is_available() else 'cpu'
+    # device = 'cuda:'+str(gpu-id) if torch.cuda.is_available() else 'cpu'
+    device = args.gpu_id
     model.train()
     start = time.time()
     for batch_idx, (labels, tokens, mask) in enumerate(train_data):
