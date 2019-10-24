@@ -283,7 +283,8 @@ def main(args):
     print(best_model_path)
     checkpoint = torch.load(best_model_path)
     model.load_state_dict(checkpoint["state_dict"])
-    test(test_data, model, device, logger)
+    test(test_data, model, args.gpu_id, logger)
+    # test(test_data, model, device, logger)
 
 
 if __name__ == "__main__":
