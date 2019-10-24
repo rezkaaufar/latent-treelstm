@@ -1,0 +1,4 @@
+24-10-2019 15:35:26 - args: Namespace(baseline_type='self_critical', batch_size=64, clip_grad_norm=0.5, entropy_weight=0.0001, env_lr=1.0, es_patience=20, es_threshold=0.005, gpu_id=0, hidden_dim=128, l2_weight=0.0001, logs_path='data/listops/reinforce/logs/exp0', lr_scheduler_patience=8, max_epoch=300, model_dir='data/listops/reinforce/models/exp0', optimizer='adadelta', parser_leaf_transformation='lstm_transformation', parser_trans_hidden_dim=128, pol_lr=1.0, tensorboard_path='data/listops/reinforce/tensorboard/exp0', tree_leaf_transformation='no_transformation', tree_trans_hidden_dim=128, var_normalization=True, word_dim=128)
+24-10-2019 15:35:26 - args hash: -4368267726335971146
+24-10-2019 15:35:26 - random seed: 28854
+24-10-2019 15:35:26 - checkpoint's dir is: data/listops/reinforce/models/exp0/m-4368267726335971146
