@@ -5,7 +5,7 @@
 
 import torch
 from torch.utils.data import Dataset
-from listops.data_preprocessing import load_listops_data
+from listops.data_preprocessing.load_listops_data import load_listops_data
 
 
 class ListOpsDataset(Dataset):

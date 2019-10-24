@@ -54,9 +54,9 @@ def make_path_preparations(args):
 
 
 def get_data(args):
-    train_dataset = ListOpsDataset("data/listops/interim/train.tsv", "data/listops/processed/vocab.txt", max_len=130)
-    valid_dataset = ListOpsDataset("data/listops/interim/valid.tsv", "data/listops/processed/vocab.txt", max_len=300)
-    test_dataset = ListOpsDataset("data/listops/interim/test.tsv", "data/listops/processed/vocab.txt")
+    train_dataset = ListOpsDataset("data/listops/interim/train.tsv", "data/listops/processed/vocab.txt", max_len=5)
+    valid_dataset = ListOpsDataset("data/listops/interim/valid.tsv", "data/listops/processed/vocab.txt", max_len=5)
+    test_dataset = ListOpsDataset("data/listops/interim/test.tsv", "data/listops/processed/vocab.txt", max_len=5)
 
     train_data_sampler = ListOpsBucketSampler(dataset=train_dataset, batch_size=args.batch_size, shuffle=True,
                                               drop_last=True)
@@ -160,6 +160,7 @@ def validate(valid_data, model, epoch, device, logger, summary_writer):
     start = time.time()
     with torch.no_grad():
         for labels, tokens, mask in valid_data:
+            # print("running")
             labels = labels.to(device=device, non_blocking=True)
             tokens = tokens.to(device=device, non_blocking=True)
             mask = mask.to(device=device, non_blocking=True)
@@ -199,7 +200,7 @@ def train(train_data, valid_data, model, optimizer, lr_scheduler, es, epoch, arg
     entropy_meter = AverageMeter()
     n_entropy_meter = AverageMeter()
 
-    device = args.gpu_id
+    device = 'cuda:'+str(gpu-id) if torch.cuda.is_available() else 'cpu'
     model.train()
     start = time.time()
     for batch_idx, (labels, tokens, mask) in enumerate(train_data):
@@ -270,7 +271,10 @@ def main(args):
                                                      policy_parameters=model.get_policy_parameters(),
                                                      environment_parameters=model.get_environment_parameters())
 
+    # device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+
     validate(valid_data, model, 0, args.gpu_id, logger, summary_writer)
+    # validate(valid_data, model, 0, device, logger, summary_writer)
     for epoch in range(args.max_epoch):
         train(train_data, valid_data, model, optimizer, lr_scheduler, es, epoch, args, logger, summary_writer)
         if es.is_converged:
@@ -278,7 +282,7 @@ def main(args):
     print(best_model_path)
     checkpoint = torch.load(best_model_path)
     model.load_state_dict(checkpoint["state_dict"])
-    test(test_data, model, args.gpu_id, logger)
+    test(test_data, model, device, logger)
 
 
 if __name__ == "__main__":
